@@ -226,5 +226,8 @@ with yours.
   `worktree>` or `Choice`. The assertion message ends with the last part of the
   terminal output, which usually shows why the picker did not appear.
 - **Leftover tmux servers after an interrupted run**: they are named
-  `tmuxp-wt-<id>`. List them with `ls "${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"` and
-  stop one with `tmux -L tmuxp-wt-<id> kill-server`.
+  `tmuxp-wt-<id>`. List them with `ps ax | grep '[t]muxp-wt-'` and stop one
+  with `tmux -L tmuxp-wt-<id> kill-server`. Every run also leaves empty socket
+  files in `${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)`, because tmux does not delete
+  them on exit. Remove them when no tests are running:
+  `rm "${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"/tmuxp-wt-*`.
