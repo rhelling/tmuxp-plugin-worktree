@@ -115,8 +115,8 @@ They check that:
 ### How the tests stay out of your way
 
 - Every test starts its own tmux server on a random socket
-  (`tmux -L tmuxp-wt-<id>`) and kills it afterwards, so your running sessions are
-  never touched.
+  (`tmux -L tmuxp-wt-<id>`), and afterwards kills it and removes the socket file,
+  so your running sessions are never touched.
 - Sessions are loaded detached with `-f /dev/null` (your `~/.tmux.conf` is not
   read) and `SHELL=/bin/sh`.
 - Panes and setup scripts only run short shell commands inside the temporary
@@ -227,7 +227,7 @@ with yours.
   terminal output, which usually shows why the picker did not appear.
 - **Leftover tmux servers after an interrupted run**: they are named
   `tmuxp-wt-<id>`. List them with `ps ax | grep '[t]muxp-wt-'` and stop one
-  with `tmux -L tmuxp-wt-<id> kill-server`. Every run also leaves empty socket
-  files in `${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)`, because tmux does not delete
-  them on exit. Remove them when no tests are running:
+  with `tmux -L tmuxp-wt-<id> kill-server`. tmux does not delete a socket file
+  when its server exits, so an interrupted run can also leave empty sockets in
+  `${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)`. Remove them when no tests are running:
   `rm "${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"/tmuxp-wt-*`.

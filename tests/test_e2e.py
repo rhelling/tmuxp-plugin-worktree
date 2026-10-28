@@ -232,6 +232,12 @@ class Harness:
 
     def close(self):
         run(["tmux", "-L", self.socket, "kill-server"])
+        # tmux keeps the socket file after its server exits
+        tmpdir = os.environ.get("TMUX_TMPDIR") or "/tmp"
+        try:
+            os.unlink(os.path.join(tmpdir, f"tmux-{os.getuid()}", self.socket))
+        except FileNotFoundError:
+            pass
 
 
 @pytest.fixture
