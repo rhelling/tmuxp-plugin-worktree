@@ -63,6 +63,28 @@ uv tool install tmuxp --with tmuxp-plugin-worktree
 python -m pip install tmuxp-plugin-worktree
 ```
 
+Not sure which one you have? `which tmuxp` tells you: `~/.local/bin/tmuxp`
+is pipx or uv, `/opt/homebrew/...` (or `/usr/local/...`) is Homebrew.
+
+Homebrew installs tmuxp in a private virtualenv without pip, and `brew upgrade`
+would wipe anything you add to it. To use the PyPI package, switch to pipx
+(or use [Option B](#option-b-no-install-works-with-homebrews-tmuxp)):
+
+```bash
+brew install pipx && pipx ensurepath    # open a new shell afterwards
+brew uninstall tmuxp
+pipx install tmuxp
+pipx inject tmuxp tmuxp-plugin-worktree
+```
+
+To upgrade the plugin later:
+
+```bash
+pipx upgrade tmuxp --include-injected                        # pipx
+uv tool upgrade tmuxp                                        # uv
+python -m pip install -U tmuxp-plugin-worktree               # pip
+```
+
 ```yaml
 session_name: myapp
 start_directory: ~/code/myrepo
@@ -170,7 +192,7 @@ another tmuxp version, a manual test checklist and troubleshooting.
 ## Releasing
 
 1. Bump `__version__` in `src/tmuxp_plugin_worktree.py` and commit.
-2. Tag and push: `git tag v0.1.0 && git push origin main v0.1.0`.
+2. Tag and push: `git tag vX.Y.Z && git push origin main vX.Y.Z`.
 3. The `publish` workflow builds the package and uploads it to PyPI with
    trusted publishing; no API token is needed.
 

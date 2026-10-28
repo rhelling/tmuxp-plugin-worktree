@@ -36,7 +36,7 @@ from libtmux import Session
 from tmuxp.plugin import TmuxpPlugin
 from tmuxp.util import run_before_script
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 ENV_VAR = "WT_PATH"
 
