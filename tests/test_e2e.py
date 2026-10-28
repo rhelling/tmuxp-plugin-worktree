@@ -484,7 +484,8 @@ def test_fzf_menu(h, repos):
     assert rc == 0 and h.sessions() == {"fzf"}, out[-500:]
     rc, out = h.drive(ws, [("worktree>", b"\x1b[B"), ("", b"\r")])
     assert rc == 0 and "fzf-detached" in h.sessions(), out[-500:]
-    rc, out = h.drive(ws, [("worktree>", b"feature"), ("", b"\r")])
+    # fzf filters asynchronously: wait for its "1/5" match count before Enter
+    rc, out = h.drive(ws, [("worktree>", b"feature"), ("1/5", b"\r")])
     assert rc == 0 and "fzf-feature-x" in h.sessions(), out[-500:]
     before = h.sessions()
     rc, out = h.drive(ws, [("worktree>", b"\x1b")])
