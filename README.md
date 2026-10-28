@@ -159,7 +159,10 @@ python3 -m venv .venv
 
 The end-to-end tests need `tmux` and `git`. They create throwaway repositories
 and run tmuxp against a private tmux server, so your own sessions are never
-touched. The fzf test is skipped when fzf is not installed.
+touched. The fzf tests are skipped when fzf is not installed.
+
+See [TESTING.md](TESTING.md) for what the tests cover, running a subset or
+another tmuxp version, a manual test checklist and troubleshooting.
 
 ## License
 
