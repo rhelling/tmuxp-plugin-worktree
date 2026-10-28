@@ -1,4 +1,4 @@
-"""End-to-end tests for tmuxp-worktree.
+"""End-to-end tests for tmuxp-plugin-worktree.
 
 They use real git worktrees, the real tmuxp CLI and a private tmux server (its
 own socket per test), so your own tmux sessions are never touched. No dev
@@ -147,7 +147,7 @@ class Harness:
             "workspace_builder_paths:\n"
             f"  - {SRC}\n"
             "plugins:\n"
-            "  - tmuxp_worktree.WorktreePlugin\n"
+            "  - tmuxp_plugin_worktree.WorktreePlugin\n"
             "windows:\n"
             "  - window_name: main\n"
             "    start_directory: src\n"
@@ -164,7 +164,7 @@ class Harness:
         path = self.dir / f"{config['session_name']}.json"
         path.write_text(json.dumps({
             "workspace_builder_paths": [SRC],
-            "plugins": ["tmuxp_worktree.WorktreePlugin"],
+            "plugins": ["tmuxp_plugin_worktree.WorktreePlugin"],
             **config,
         }))
         return str(path)

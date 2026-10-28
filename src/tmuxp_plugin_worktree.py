@@ -1,11 +1,11 @@
-"""tmuxp-worktree: pick a git worktree when loading a tmuxp session.
+"""tmuxp-plugin-worktree: pick a git worktree when loading a tmuxp session.
 
 Enable it in a workspace file::
 
     workspace_builder_paths:   # tmuxp >= 1.73; not needed when the plugin is installed
-      - ~/Documents/Projects/tmuxp-worktree/src
+      - ~/Documents/Projects/tmuxp-plugin-worktree/src
     plugins:
-      - tmuxp_worktree.WorktreePlugin
+      - tmuxp_plugin_worktree.WorktreePlugin
 
 The session's ``start_directory`` is the default. When that repository has more
 worktrees, the plugin shows a picker (fzf, or a numbered list without fzf) with
@@ -45,7 +45,7 @@ class WorktreePlugin(TmuxpPlugin):
     """Let the user pick the git worktree a session starts in."""
 
     def __init__(self) -> None:
-        super().__init__(plugin_name="tmuxp-worktree")
+        super().__init__(plugin_name="tmuxp-plugin-worktree")
         self._config = _workspace_config()
         self._finish: Callable[[], None] | None = None
         if self._config is None:

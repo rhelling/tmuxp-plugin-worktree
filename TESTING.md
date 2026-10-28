@@ -1,4 +1,4 @@
-# Testing tmuxp-worktree
+# Testing tmuxp-plugin-worktree
 
 How to run the automated tests, what they cover, and how to check the plugin by
 hand against your own repositories.
@@ -14,7 +14,7 @@ hand against your own repositories.
 ## Run the test suite
 
 ```bash
-cd ~/Documents/Projects/tmuxp-worktree
+cd ~/Documents/Projects/tmuxp-plugin-worktree
 python3 -m venv .venv
 .venv/bin/pip install -e '.[test]'
 .venv/bin/pytest
@@ -145,9 +145,9 @@ with yours.
    session_name: myapp
    start_directory: ~/code/myrepo
    workspace_builder_paths:
-     - ~/Documents/Projects/tmuxp-worktree/src
+     - ~/Documents/Projects/tmuxp-plugin-worktree/src
    plugins:
-     - tmuxp_worktree.WorktreePlugin
+     - tmuxp_plugin_worktree.WorktreePlugin
    windows:
      - window_name: shell
        panes:
@@ -211,8 +211,8 @@ with yours.
   Python (seen with tmuxp 1.73 and 1.74 on Python 3.15). Recreate the virtualenv
   with an older Python, for example `python3.14 -m venv --clear .venv`, or
   install a newer tmuxp with `.venv/bin/pip install -U tmuxp`.
-- **`[Plugin Error] Couldn't load tmuxp_worktree.WorktreePlugin` with
-  `No module named 'tmuxp_worktree'`**: tmuxp cannot import the plugin. Check the
+- **`[Plugin Error] Couldn't load tmuxp_plugin_worktree.WorktreePlugin` with
+  `No module named 'tmuxp_plugin_worktree'`**: tmuxp cannot import the plugin. Check the
   `workspace_builder_paths` entry (tmuxp 1.73 or newer), or install the plugin
   into tmuxp's environment.
 - **`[Builder Error] workspace_builder_paths entry is invalid: …`**: that

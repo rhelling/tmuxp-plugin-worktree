@@ -3,22 +3,44 @@ requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tmuxp-worktree"
-version = "0.1.0"
+name = "tmuxp-plugin-worktree"
+dynamic = ["version"]
 description = "tmuxp plugin: pick the git worktree a session starts in"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
+authors = [{ name = "Robbert Helling" }]
 dependencies = ["tmuxp>=1.73"]
 keywords = ["tmux", "tmuxp", "git", "worktree", "plugin"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Environment :: Plugins",
+    "Intended Audience :: Developers",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Topic :: Terminals",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/rhelling/tmuxp-plugin-worktree"
+Issues = "https://github.com/rhelling/tmuxp-plugin-worktree/issues"
+Changelog = "https://github.com/rhelling/tmuxp-plugin-worktree/releases"
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
-py-modules = ["tmuxp_worktree"]
+py-modules = ["tmuxp_plugin_worktree"]
+
+[tool.setuptools.dynamic]
+version = { attr = "tmuxp_plugin_worktree.__version__" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,4 +1,4 @@
-# tmuxp-worktree
+# tmuxp-plugin-worktree
 
 A [tmuxp](https://github.com/tmux-python/tmuxp) plugin that lets you pick the git
 worktree a session starts in.
@@ -47,25 +47,50 @@ nothing changes and no picker is shown.
 
 ## Installation
 
-Put the project somewhere permanent, for example:
+### Option A: install from PyPI (recommended)
+
+Install the package into the Python environment tmuxp runs in; then only the
+`plugins` key is needed in your workspace files.
 
 ```bash
-git clone <repository-url> ~/Documents/Projects/tmuxp-worktree
+# tmuxp installed with pipx
+pipx inject tmuxp tmuxp-plugin-worktree
+
+# tmuxp installed with uv
+uv tool install tmuxp --with tmuxp-plugin-worktree
+
+# tmuxp installed with pip in a virtualenv (activate it first)
+python -m pip install tmuxp-plugin-worktree
 ```
 
-### Option A: no install (recommended, works with Homebrew's tmuxp)
+```yaml
+session_name: myapp
+start_directory: ~/code/myrepo
+plugins:
+  - tmuxp_plugin_worktree.WorktreePlugin
+windows:
+  - window_name: editor
+    panes:
+      - nvim
+```
 
-Since 1.73, tmuxp can add import paths per workspace with
-`workspace_builder_paths`. Add these keys to every workspace file that should get
-the picker:
+### Option B: no install (works with Homebrew's tmuxp)
+
+Homebrew installs tmuxp in a private virtualenv without pip. Since 1.73, tmuxp
+can add import paths per workspace with `workspace_builder_paths`, so you can
+point it at a checkout instead:
+
+```bash
+git clone https://github.com/rhelling/tmuxp-plugin-worktree.git ~/Documents/Projects/tmuxp-plugin-worktree
+```
 
 ```yaml
 session_name: myapp
 start_directory: ~/code/myrepo
 workspace_builder_paths:
-  - ~/Documents/Projects/tmuxp-worktree/src
+  - ~/Documents/Projects/tmuxp-plugin-worktree/src
 plugins:
-  - tmuxp_worktree.WorktreePlugin
+  - tmuxp_plugin_worktree.WorktreePlugin
 windows:
   - window_name: editor
     panes:
@@ -73,29 +98,7 @@ windows:
 ```
 
 Relative entries in `workspace_builder_paths` are resolved against the directory
-of the workspace file. Homebrew installs tmuxp in a private virtualenv without
-pip, so this is the easiest route there.
-
-### Option B: install into tmuxp's Python environment
-
-Install the package where tmuxp can import it; then only the `plugins` key is
-needed in your workspace files.
-
-```bash
-# tmuxp installed with pipx
-pipx inject tmuxp ~/Documents/Projects/tmuxp-worktree
-
-# tmuxp installed with uv
-uv tool install tmuxp --with ~/Documents/Projects/tmuxp-worktree
-
-# tmuxp installed with pip in a virtualenv (activate it first)
-python -m pip install ~/Documents/Projects/tmuxp-worktree
-```
-
-```yaml
-plugins:
-  - tmuxp_worktree.WorktreePlugin
-```
+of the workspace file.
 
 ### Check that it works
 
@@ -163,6 +166,13 @@ touched. The fzf tests are skipped when fzf is not installed.
 
 See [TESTING.md](TESTING.md) for what the tests cover, running a subset or
 another tmuxp version, a manual test checklist and troubleshooting.
+
+## Releasing
+
+1. Bump `__version__` in `src/tmuxp_plugin_worktree.py` and commit.
+2. Tag and push: `git tag v0.1.0 && git push origin main v0.1.0`.
+3. The `publish` workflow builds the package and uploads it to PyPI with
+   trusted publishing; no API token is needed.
 
 ## License
 

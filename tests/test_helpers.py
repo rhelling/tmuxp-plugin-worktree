@@ -6,7 +6,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
-import tmuxp_worktree as wt  # noqa: E402
+import tmuxp_plugin_worktree as wt  # noqa: E402
 
 
 def test_suffix_strips_the_repository_name():
